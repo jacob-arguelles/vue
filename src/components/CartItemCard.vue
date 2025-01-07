@@ -10,14 +10,16 @@ const onAddStock = (item) => {
   updateProductStockInCart(item.id, Number(item.quantity) + 1);
 };
 const onSubtractStock = (item) => {
+  /* 
   if (Number(item.quantity) < 1) {
-    /* 
     Este endpoint responde con un status code 500. Para simular que elimino el producto lo que voy a hacer es filtrar los productos sin stock.
     deleteProductInCart(item.id);
-    */
   } else {
     updateProductStockInCart(item.id, Number(item.quantity) - 1);
-  }
+}
+*/
+
+  updateProductStockInCart(item.id, Number(item.quantity) - 1);
 };
 </script>
 

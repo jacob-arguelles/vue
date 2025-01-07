@@ -65,8 +65,12 @@ watch(productInCart, () => {
 });
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
+    console.log(
+      "filter",
+      cartItems.value.filter((item) => Number(item.stock) > 0)
+    );
     cartItems.value = cartItems.value
-      .filter((item) => item.stock > 0)
+      .filter((item) => Number(item.stock) > 0)
       .map((item) => {
         if (productStockInCartUpdated.value.id === item.id) {
           return { ...item, quantity: productStockInCartUpdated.value.stock };
