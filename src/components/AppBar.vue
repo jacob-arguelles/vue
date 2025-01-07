@@ -71,14 +71,19 @@ watch(productInCart, () => {
 });
 watch(productInCartRegistered, () => {
   if (productInCartRegistered.value) {
-    cartItems.value = cartItems.value.push({
-      id: productInCartRegistered.value.id,
-      name: productInCartRegistered.value.product.name,
-      description: productInCartRegistered.value.product.description,
-      price: productInCartRegistered.value.product.price,
-      quantity: productInCartRegistered.value.stock,
-      image: "https://via.placeholder.com/60",
-    });
+    console.log("productInCartRegistered", productInCartRegistered);
+    console.log("productInCartRegistered.value", productInCartRegistered.value);
+    cartItems.value = [
+      ...cartItems.value,
+      {
+        id: productInCartRegistered.value.id,
+        name: productInCartRegistered.value.product.name,
+        description: productInCartRegistered.value.product.description,
+        price: productInCartRegistered.value.product.price,
+        quantity: productInCartRegistered.value.stock,
+        image: "https://via.placeholder.com/60",
+      },
+    ];
   }
 });
 watch(productStockInCartUpdated, () => {
