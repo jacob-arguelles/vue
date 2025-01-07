@@ -86,8 +86,8 @@ watch(
     </v-row>
     <v-row v-else-if="loadingProductsList">
       <v-col
-        v-for="(product, index) in [1, 2, 3]"
-        :key="index"
+        v-for="item in [1, 2, 3]"
+        :key="item"
         cols="12"
         xs="12"
         sm="6"

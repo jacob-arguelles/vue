@@ -71,8 +71,6 @@ watch(productInCart, () => {
 });
 watch(productInCartRegistered, () => {
   if (productInCartRegistered.value) {
-    console.log("productInCartRegistered", productInCartRegistered);
-    console.log("productInCartRegistered.value", productInCartRegistered.value);
     cartItems.value = [
       ...cartItems.value,
       {

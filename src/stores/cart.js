@@ -101,7 +101,11 @@ export const useCartStore = defineStore("cart", () => {
       const body = await response.json();
 
       if (!response.ok) {
-        throw new Error(body.message);
+        throw new Error(
+          body.message === "Validation Error."
+            ? "The product id has already been taken."
+            : body.message
+        );
       }
 
       productInCartRegistered.value = body.data;

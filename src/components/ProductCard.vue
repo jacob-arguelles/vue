@@ -1,14 +1,20 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, computed } from "vue";
+import { storeToRefs } from "pinia";
 import { useCartStore } from "@/stores/cart";
 
 const { product } = defineProps(["product"]);
 
 const { registerProductInCart } = useCartStore();
+const { productInCart } = storeToRefs(useCartStore());
 
 const addToCart = (product) => {
   registerProductInCart(product.id);
 };
+
+const btnAddDisabled = computed(() => {
+  return productInCart.value.some((item) => item.product.id === product.id);
+});
 </script>
 
 <template>
@@ -25,7 +31,11 @@ const addToCart = (product) => {
     </v-card-text>
 
     <v-card-actions>
-      <v-btn color="primary" @click="addToCart(product)">
+      <v-btn
+        color="primary"
+        :disabled="btnAddDisabled"
+        @click="addToCart(product)"
+      >
         Añadir al carrito
       </v-btn>
       <v-spacer></v-spacer>
