@@ -68,16 +68,15 @@ watch(productInCart, () => {
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
     cartItems.value = cartItems.value
-      .filter((item) => {
-        console.log("itemfilter", item);
-
-        Number(item.quantity) > 0;
-      })
       .map((item) => {
         if (productStockInCartUpdated.value.id === item.id) {
           return { ...item, quantity: productStockInCartUpdated.value.stock };
         }
         return item;
+      })
+      .filter((item) => {
+        console.log("itemfilter", item);
+        return Number(item.quantity) > 0;
       });
   }
 });
