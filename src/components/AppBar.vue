@@ -11,9 +11,10 @@ const router = useRouter();
 
 const { getProductsList } = useProductsStore();
 const { logout } = useAuthStore();
-const { productStockInCartUpdated } = useCartStore();
 const { userLogin } = storeToRefs(useAuthStore());
-const { productInCart } = storeToRefs(useCartStore());
+const { productInCart, productStockInCartUpdated } = storeToRefs(
+  useCartStore()
+);
 
 const menu = ref(false);
 const openCart = ref(false);
