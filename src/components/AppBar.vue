@@ -64,6 +64,7 @@ watch(productInCart, () => {
   }
 });
 watch(productStockInCartUpdated, () => {
+  console.log("productStockInCartUpdated", productStockInCartUpdated);
   if (productStockInCartUpdated.value) {
     console.log(
       "productStockInCartUpdated.value",
