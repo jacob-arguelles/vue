@@ -65,13 +65,8 @@ watch(productInCart, () => {
   }
 });
 watch(productStockInCartUpdated, () => {
-  console.log("productStockInCartUpdated", productStockInCartUpdated);
   if (productStockInCartUpdated.value) {
-    console.log(
-      "productStockInCartUpdated.value",
-      productStockInCartUpdated.value
-    );
-    cartItems.value = productInCart.value.map((item) => {
+    cartItems.value = cartItems.value.map((item) => {
       if (productStockInCartUpdated.value.id === item.id) {
         return { ...item, quantity: productStockInCartUpdated.value.stock };
       }
