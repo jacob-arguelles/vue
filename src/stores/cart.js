@@ -14,6 +14,10 @@ export const useCartStore = defineStore("cart", () => {
   const productInCartRegistered = ref(null);
   const productInCartRegisterLoading = ref(false);
   const productInCartRegisterError = ref("");
+  // Delete product in cart state
+  const productInCartDeleted = ref(null);
+  const productInCartDeleteLoading = ref(false);
+  const productInCartDeleteError = ref("");
 
   const getProductsInCart = async () => {
     try {
@@ -110,6 +114,32 @@ export const useCartStore = defineStore("cart", () => {
     }
   };
 
+  const deleteProductInCart = async (itemId) => {
+    try {
+      productInCartDeleteLoading.value = true;
+      const url = import.meta.env.VITE_API_BASE_URL;
+      const token = JSON.parse(localStorage.getItem("setSession"))?.token;
+      const response = await fetch(`${url}/carts/${itemId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      const body = await response.json();
+
+      if (!response.ok) {
+        throw new Error(body.message);
+      }
+      productInCartDeleted.value = body.data;
+      productInCartDeleteLoading.value = false;
+    } catch (err) {
+      productInCartDeleted.value = null;
+      productInCartDeleteError.value = err.data?.message || err.message || err;
+      productInCartDeleteLoading.value = false;
+    }
+  };
+
   return {
     getProductsInCart,
     loadingProductsInCart,
@@ -120,5 +150,9 @@ export const useCartStore = defineStore("cart", () => {
     productStockInCartUpdatedError,
     productStockInCartUpdatedLoading,
     registerProductInCart,
+    productInCartDeleted,
+    productInCartDeleteLoading,
+    productInCartDeleteError,
+    deleteProductInCart,
   };
 });

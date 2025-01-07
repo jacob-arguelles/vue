@@ -12,9 +12,11 @@ const { getProductsInCart } = useCartStore();
 const { products, productsError, loadingProductsList } = storeToRefs(
   useProductsStore()
 );
-const { productsInCartError, productStockInCartUpdatedError } = storeToRefs(
-  useCartStore()
-);
+const {
+  productInCartDeleteError,
+  productsInCartError,
+  productStockInCartUpdatedError,
+} = storeToRefs(useCartStore());
 
 const productsState = ref([]);
 const snackbar = ref({
@@ -32,22 +34,27 @@ watch(products, () => {
   productsState.value = products.value;
 });
 watch(
-  [productsError, productsInCartError, productStockInCartUpdatedError],
+  [
+    productsError,
+    productsInCartError,
+    productInCartDeleteError,
+    productStockInCartUpdatedError,
+  ],
   () => {
     const setSnackbarOptions = (message) => {
       snackbar.value.message = message;
       snackbar.value.color = "error";
       snackbar.value.show = true;
     };
-    console.log(
-      "productStockInCartUpdatedError.value",
-      productStockInCartUpdatedError.value
-    );
+
     if (productsError.value) {
       setSnackbarOptions(productsError.value);
     }
     if (productsInCartError.value) {
       setSnackbarOptions(productsInCartError.value);
+    }
+    if (productInCartDeleteError.value) {
+      setSnackbarOptions(productInCartDeleteError.value);
     }
     if (productStockInCartUpdatedError.value) {
       setSnackbarOptions(productStockInCartUpdatedError.value);

@@ -12,9 +12,8 @@ const router = useRouter();
 const { getProductsList } = useProductsStore();
 const { logout } = useAuthStore();
 const { userLogin } = storeToRefs(useAuthStore());
-const { productInCart, productStockInCartUpdated } = storeToRefs(
-  useCartStore()
-);
+const { productInCart, productStockInCartUpdated, productInCartDeleted } =
+  storeToRefs(useCartStore());
 
 const menu = ref(false);
 const openCart = ref(false);
@@ -66,11 +65,20 @@ watch(productInCart, () => {
 });
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
-    cartItems.value = cartItems.value.map((item) => {
-      if (productStockInCartUpdated.value.id === item.id) {
-        return { ...item, quantity: productStockInCartUpdated.value.stock };
-      }
-      return item;
+    cartItems.value = cartItems.value
+      .filter((item) => item.stock > 0)
+      .map((item) => {
+        if (productStockInCartUpdated.value.id === item.id) {
+          return { ...item, quantity: productStockInCartUpdated.value.stock };
+        }
+        return item;
+      });
+  }
+});
+watch(productInCartDeleted, () => {
+  if (productInCartDeleted.value) {
+    cartItems.value = cartItems.value.filter((item) => {
+      item.id !== productInCartDeleted.id;
     });
   }
 });
