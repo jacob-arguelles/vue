@@ -36,7 +36,6 @@ watch(searchQuery, () => {
 const onSearchTypeClick = (data) => {
   searchPlaceHolder.value = data.title;
   searchQuery.value = "";
-  console.log("data", data);
 };
 </script>
 <template>

@@ -9,8 +9,6 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.removeItem("setSession");
     userLogin.value = null;
     userLoginError.value = "";
-
-    return null;
   };
 
   const login = async (email, password) => {

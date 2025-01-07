@@ -4,7 +4,7 @@ import { storeToRefs } from "pinia";
 import { useCartStore } from "@/stores/cart";
 
 const { product } = defineProps(["product"]);
-console.log("product", product.categories);
+
 const { registerProductInCart } = useCartStore();
 const { productInCart } = storeToRefs(useCartStore());
 
@@ -50,7 +50,7 @@ const btnAddDisabled = computed(() => {
       >
         Añadir al carrito
       </v-btn>
-      <v-spacer></v-spacer>
+      <v-spacer />
     </v-card-actions>
   </v-card>
 </template>
@@ -95,8 +95,5 @@ const btnAddDisabled = computed(() => {
 .chips-container::-webkit-scrollbar-track {
   background-color: #e0e0e0;
   border-radius: 10px;
-}
-
-.chips-container {
 }
 </style>
