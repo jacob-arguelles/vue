@@ -12,7 +12,7 @@ const addToCart = (product) => {
 </script>
 
 <template>
-  <v-card>
+  <v-card class="product-catalog-card">
     <v-img
       src="https://via.placeholder.com/150"
       height="200px"
@@ -20,7 +20,7 @@ const addToCart = (product) => {
     />
     <v-card-title>{{ product.name }}</v-card-title>
     <v-card-subtitle>${{ product.price }}</v-card-subtitle>
-    <v-card-text>
+    <v-card-text class="card-text">
       {{ product.description }}
     </v-card-text>
 
@@ -37,5 +37,11 @@ const addToCart = (product) => {
 .card-img {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
+.product-catalog-card {
+  height: 100%;
+}
+.card-text {
+  height: 4rem;
 }
 </style>

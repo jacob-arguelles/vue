@@ -150,9 +150,12 @@ export const useCartStore = defineStore("cart", () => {
     productStockInCartUpdatedError,
     productStockInCartUpdatedLoading,
     registerProductInCart,
+    productInCartRegisterError,
+    productInCartRegisterLoading,
+    productInCartRegistered,
+    deleteProductInCart,
     productInCartDeleted,
     productInCartDeleteLoading,
     productInCartDeleteError,
-    deleteProductInCart,
   };
 });

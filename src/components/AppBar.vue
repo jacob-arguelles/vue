@@ -12,8 +12,12 @@ const router = useRouter();
 const { getProductsList } = useProductsStore();
 const { logout } = useAuthStore();
 const { userLogin } = storeToRefs(useAuthStore());
-const { productInCart, productStockInCartUpdated, productInCartDeleted } =
-  storeToRefs(useCartStore());
+const {
+  productInCart,
+  productStockInCartUpdated,
+  productInCartRegistered,
+  productInCartDeleted,
+} = storeToRefs(useCartStore());
 
 const menu = ref(false);
 const openCart = ref(false);
@@ -65,6 +69,18 @@ watch(productInCart, () => {
     productInCart.value = [];
   }
 });
+watch(productInCartRegistered, () => {
+  if (productInCartRegistered.value) {
+    cartItems.value = cartItems.value.push({
+      id: productInCartRegistered.value.id,
+      name: productInCartRegistered.value.product.name,
+      description: productInCartRegistered.value.product.description,
+      price: productInCartRegistered.value.product.price,
+      quantity: productInCartRegistered.value.stock,
+      image: "https://via.placeholder.com/60",
+    });
+  }
+});
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
     cartItems.value = cartItems.value
@@ -75,7 +91,6 @@ watch(productStockInCartUpdated, () => {
         return item;
       })
       .filter((item) => {
-        console.log("itemfilter", item);
         return Number(item.quantity) > 0;
       });
   }

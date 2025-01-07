@@ -14,6 +14,7 @@ const { products, productsError, loadingProductsList } = storeToRefs(
 );
 const {
   productInCartDeleteError,
+  productInCartRegisterError,
   productsInCartError,
   productStockInCartUpdatedError,
 } = storeToRefs(useCartStore());
@@ -35,9 +36,10 @@ watch(products, () => {
 });
 watch(
   [
+    productInCartDeleteError,
+    productInCartRegisterError,
     productsError,
     productsInCartError,
-    productInCartDeleteError,
     productStockInCartUpdatedError,
   ],
   () => {
@@ -58,6 +60,9 @@ watch(
     }
     if (productStockInCartUpdatedError.value) {
       setSnackbarOptions(productStockInCartUpdatedError.value);
+    }
+    if (productInCartRegisterError.value) {
+      setSnackbarOptions(productInCartRegisterError.value);
     }
   },
   { immediate: true }
