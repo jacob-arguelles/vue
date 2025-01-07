@@ -68,7 +68,11 @@ watch(productInCart, () => {
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
     cartItems.value = cartItems.value
-      .filter((item) => Number(item.quantity) > 0)
+      .filter((item) => {
+        console.log("itemfilter", item);
+
+        Number(item.quantity) > 0;
+      })
       .map((item) => {
         if (productStockInCartUpdated.value.id === item.id) {
           return { ...item, quantity: productStockInCartUpdated.value.stock };
@@ -110,7 +114,7 @@ const viewCart = () => {
 
     <v-btn icon @click="viewCart">
       <v-badge
-        :content="productInCart.length"
+        :content="cartItems.length"
         color="red"
         overlap
         class="cart-badge"
