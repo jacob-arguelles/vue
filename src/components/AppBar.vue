@@ -11,6 +11,7 @@ const router = useRouter();
 
 const { getProductsList } = useProductsStore();
 const { logout } = useAuthStore();
+const { productStockInCartUpdated } = useCartStore();
 const { userLogin } = storeToRefs(useAuthStore());
 const { productInCart } = storeToRefs(useCartStore());
 
@@ -60,6 +61,16 @@ watch(productInCart, () => {
     });
   } else {
     productInCart.value = [];
+  }
+});
+watch(productStockInCartUpdated, () => {
+  if (productStockInCartUpdated.value) {
+    cartItems.value = productInCart.value.map((item) => {
+      if (productStockInCartUpdated.value.id === item.id) {
+        return { ...item, quantity: productStockInCartUpdated.value.stock };
+      }
+      return item;
+    });
   }
 });
 

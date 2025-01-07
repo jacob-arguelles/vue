@@ -9,6 +9,9 @@ const { updateProductStockInCart } = useCartStore();
 const onAddStock = (product) => {
   updateProductStockInCart(product.id, product.quantity + 1);
 };
+const onSubtractStock = (product) => {
+  updateProductStockInCart(product.id, product.quantity - 1);
+};
 </script>
 
 <template>
@@ -36,10 +39,16 @@ const onAddStock = (product) => {
                 size="small"
                 rounded="xl"
               >
-                add
+                +
               </v-btn>
-              <v-btn color="red" width="10" size="small" rounded="xl">
-                sub
+              <v-btn
+                @click="onSubtractStock(product)"
+                color="red"
+                width="10"
+                size="small"
+                rounded="xl"
+              >
+                -
               </v-btn>
             </v-card-subtitle>
             <v-card-actions> </v-card-actions>

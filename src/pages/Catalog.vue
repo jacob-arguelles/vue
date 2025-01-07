@@ -12,7 +12,9 @@ const { getProductsInCart } = useCartStore();
 const { products, productsError, loadingProductsList } = storeToRefs(
   useProductsStore()
 );
-const { productsInCartError } = storeToRefs(useCartStore());
+const { productsInCartError, productStockInCartUpdatedError } = storeToRefs(
+  useCartStore()
+);
 
 const productsState = ref([]);
 const snackbar = ref({
@@ -30,17 +32,22 @@ watch(products, () => {
   productsState.value = products.value;
 });
 watch(
-  [productsError, productsInCartError],
+  [productsError, productsInCartError, productStockInCartUpdatedError],
   () => {
-    if (productsError.value) {
-      snackbar.value.message = productsError.value;
+    const setSnackbarOptions = (message) => {
+      snackbar.value.message = message;
       snackbar.value.color = "error";
       snackbar.value.show = true;
+    };
+
+    if (productsError.value) {
+      setSnackbarOptions(productsError.value);
     }
     if (productsInCartError.value) {
-      snackbar.value.message = productsInCartError.value;
-      snackbar.value.color = "error";
-      snackbar.value.show = true;
+      setSnackbarOptions(productsInCartError.value);
+    }
+    if (productStockInCartUpdatedError.value) {
+      setSnackbarOptions(productStockInCartUpdatedError.value);
     }
   },
   { immediate: true }
