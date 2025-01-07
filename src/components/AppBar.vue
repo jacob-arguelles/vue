@@ -66,7 +66,7 @@ watch(productInCart, () => {
         return product;
       });
   } else {
-    productInCart.value = [];
+    cartItems.value = [];
   }
 });
 watch(productInCartRegistered, () => {
