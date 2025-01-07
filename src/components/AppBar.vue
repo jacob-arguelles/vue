@@ -65,6 +65,10 @@ watch(productInCart, () => {
 });
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
+    console.log(
+      "productStockInCartUpdated.value",
+      productStockInCartUpdated.value
+    );
     cartItems.value = productInCart.value.map((item) => {
       if (productStockInCartUpdated.value.id === item.id) {
         return { ...item, quantity: productStockInCartUpdated.value.stock };

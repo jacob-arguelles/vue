@@ -39,7 +39,10 @@ watch(
       snackbar.value.color = "error";
       snackbar.value.show = true;
     };
-
+    console.log(
+      "productStockInCartUpdatedError.value",
+      productStockInCartUpdatedError.value
+    );
     if (productsError.value) {
       setSnackbarOptions(productsError.value);
     }
