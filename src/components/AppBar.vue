@@ -48,29 +48,27 @@ watch(
 );
 watch(productInCart, () => {
   if (productInCart.value?.length) {
-    cartItems.value = productInCart.value.map((item) => {
-      const product = {
-        id: item.id,
-        name: item.product.name,
-        description: item.product.description,
-        price: item.product.price,
-        quantity: item.stock,
-        image: "https://via.placeholder.com/60",
-      };
-      return product;
-    });
+    cartItems.value = productInCart.value
+      .filter((item) => Number(item.stock) > 0)
+      .map((item) => {
+        const product = {
+          id: item.id,
+          name: item.product.name,
+          description: item.product.description,
+          price: item.product.price,
+          quantity: item.stock,
+          image: "https://via.placeholder.com/60",
+        };
+        return product;
+      });
   } else {
     productInCart.value = [];
   }
 });
 watch(productStockInCartUpdated, () => {
   if (productStockInCartUpdated.value) {
-    console.log(
-      "filter",
-      cartItems.value.filter((item) => Number(item.stock) > 0)
-    );
     cartItems.value = cartItems.value
-      .filter((item) => Number(item.stock) > 0)
+      .filter((item) => Number(item.quantity) > 0)
       .map((item) => {
         if (productStockInCartUpdated.value.id === item.id) {
           return { ...item, quantity: productStockInCartUpdated.value.stock };
