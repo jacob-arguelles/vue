@@ -67,10 +67,18 @@ watch(
   },
   { immediate: true }
 );
+
+const updatese = (asd) => {
+  productsState.value = products.value.filter((item) => {
+    return item.categories.some((item) =>
+      item.name?.toLowerCase()?.includes(asd.trim().toLowerCase())
+    );
+  });
+};
 </script>
 
 <template>
-  <AppBar />
+  <AppBar @update:search="updatese" />
   <v-container class="product-catalog-container">
     <v-row v-if="!loadingProductsList && productsState.length">
       <v-col

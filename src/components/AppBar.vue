@@ -1,15 +1,16 @@
 <script setup>
-import { ref, watch, onWatcherCleanup } from "vue";
+import { ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { useProductsStore } from "@/stores/products";
 import { useAuthStore } from "@/stores/userAuth";
 import { useCartStore } from "@/stores/cart";
 import CartItemCard from "./CartItemCard.vue";
+import SearchInput from "./SearchInput.vue";
 
 const router = useRouter();
 
-const { getProductsList } = useProductsStore();
+defineEmits(["update:search"]);
+
 const { logout } = useAuthStore();
 const { userLogin } = storeToRefs(useAuthStore());
 const {
@@ -21,22 +22,8 @@ const {
 
 const menu = ref(false);
 const openCart = ref(false);
-const search = ref("");
 const cartItems = ref([]);
 
-watch(search, () => {
-  let timer;
-  if (search.value) {
-    timer = setTimeout(() => {
-      getProductsList(search.value);
-    }, 500);
-  } else {
-    getProductsList();
-  }
-  onWatcherCleanup(() => {
-    Boolean(timer) && clearTimeout(timer);
-  });
-});
 watch(
   userLogin,
   () => {
@@ -124,7 +111,7 @@ const viewCart = () => {
       </template>
       <v-list>
         <v-list-item @click="onLogout">
-          <v-list-item-title>Cerrar sesión</v-list-item-title>
+          <v-list-item-title>Log out</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -144,15 +131,7 @@ const viewCart = () => {
       class="mx-auto"
       :max-width="$vuetify.display.mobile ? '300px' : '400px'"
     >
-      <v-text-field
-        v-model="search"
-        placeholder="Buscar productos"
-        clearable
-        outlined
-        dense
-        hide-details
-        append-icon="mdi-magnify"
-      />
+      <SearchInput @update:search="$emit('update:search', $event)" />
     </v-responsive>
   </v-app-bar>
 
